@@ -15,6 +15,8 @@ Tests are not relying on Truffle, only on ganache.
 
 ### Ethereum side (Smart Contract)
 
+Install package with `npm i`
+
 How to deploy on Rindekin network through infura node :
 
 **Build** the contract:
@@ -31,7 +33,7 @@ How to deploy on Rindekin network through infura node :
 
 ### FE side (Nextjs)
 
-- Install package with `npm install`
+- Install package with `npm run install-fe`
 - Run `npm run dev` to start server on port 3000 
 
 

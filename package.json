@@ -7,6 +7,8 @@
     "test": "test"
   },
   "scripts": {
+    "install-fe": "cd kickstart-fe && npm install",
+    "start-fe": "cd kickstart-fe && npm run dev",
     "compile": "truffle compile",
     "deploy": "truffle deploy",
     "test": "mocha"
