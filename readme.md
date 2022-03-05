@@ -1,53 +1,75 @@
-# Solidity contract with truffle:  template 
+# Kickstarter application sample
 
-Web3 sample project to intereact between a react application and a smart contract hosted on ethereum.
+Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity).
 
 ## stack
 
 - React (Nextjs)
+- Semantic-ui
+- Mocha
 - Web3 library
+- MetaMask
 - Truffle
-- Ganache (only for tests)
+- Ganache
 
-Tests are not relying on Truffle, only on ganache.
+## High Level Design
 
-## How to run locally
+```mermaid
+sequenceDiagram
 
-### Ethereum side (Smart Contract)
+  participant Manager
+  participant Contributor1
+  participant Contributor2
+  participant ProviderX
+  participant Smart Contract
 
-Install package with `npm i`
+  Manager->>Smart Contract: Create a new camapaign
+  Contributor1->>Smart Contract: Contribute to the campaign
+  Contributor2->>Smart Contract: Contribute to the campaign
+  loop Every request
+  Manager->>Smart Contract: Create a new request to start produt development
+  Contributor1->>Smart Contract: Approve (or refuse) the request 1
+  Contributor2->>Smart Contract: Approve (or refuse) the request 1
+  Note right of Manager: Only if 50% <br>of approval
+  Manager->>Smart Contract: Send tokens to Provider
+  Smart Contract-->>ProviderX: Receive tokens
+  end
+```
 
-#### How to deploy on local ganache network through infura node :
+## Ethereum side (Smart Contract)
 
-- Install first Ganache from (download here)[https://trufflesuite.com/ganache/index.html] and start it
-- Run `npm compile` to compile contracts
-- Run `npm migrate` to move contracts to local ganache
+### Setup
 
-done !
-#### How to deploy on Rindekin network through infura node :
+- Install packages with `npm i`
 
-**Build** the contract:
+### How to deploy locally (ganache)
 
-- Run `npm compile`
-- Check if files were properly generatered (under `build/contracts` folder)
+- Download and install first Ganache from [here](https://trufflesuite.com/ganache/index.html) and start it
+- Run `npm run compile` to compile contracts
+- Run `npm run migrate` to move contracts to local ganache
 
-**Deploy** the contract:
+> Truffle has a embedded blockchain but ganache has a nice interface, making transactions/users/contracts validation easier. `truffle-config.js` is already set to target Ganache by default, nothing to do on your side.
 
-- Create an account on [infura](https://infura.io/dashboard)
-
-WIP
-
-
-### FE side (Nextjs)
-
-- Install package with `npm run install-fe`
-- Run `npm run dev` to start server on port 3000 
-
+_Ganache preview:_
+![Ganache preview](docs/ganache.png)
 
 ### How to run tests
 
 Run `npm run dev`
 
-### How to run in production
+> Truffle feature are not used for tests (`contract()`), but
+
+### How to deploy on Rindekin (infura):
 
 WIP
+
+## FE side (Nextjs)
+
+### Setup
+
+- Install packages with `npm run install-fe`
+- Run `npm run start-fe` to start server on port 3000
+
+### How to run tests
+
+Run `npm run test-fe`
