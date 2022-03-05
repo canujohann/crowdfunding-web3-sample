@@ -17,7 +17,14 @@ Tests are not relying on Truffle, only on ganache.
 
 Install package with `npm i`
 
-How to deploy on Rindekin network through infura node :
+#### How to deploy on local ganache network through infura node :
+
+- Install first Ganache from (download here)[https://trufflesuite.com/ganache/index.html] and start it
+- Run `npm compile` to compile contracts
+- Run `npm migrate` to move contracts to local ganache
+
+done !
+#### How to deploy on Rindekin network through infura node :
 
 **Build** the contract:
 
@@ -27,8 +34,8 @@ How to deploy on Rindekin network through infura node :
 **Deploy** the contract:
 
 - Create an account on [infura](https://infura.io/dashboard)
-- Run `npm deploy`
-- Stored the returned ethereum address
+
+WIP
 
 
 ### FE side (Nextjs)
