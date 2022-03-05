@@ -3,16 +3,12 @@ import { Container } from "semantic-ui-react";
 import Head from "next/head";
 import Header from "./Header";
 
+import "semantic-ui-css/semantic.min.css";
+
 const Layout = (props) => {
   return (
     <div>
       <Container>
-        <Head>
-          <link
-            rel="stylesheet"
-            href="//cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.12/semantic.min.css"
-          ></link>
-        </Head>
         <Header />
         {props.children}
       </Container>

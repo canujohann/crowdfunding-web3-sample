@@ -1,5 +1,5 @@
 import Web3 from "web3";
-import {NODE_ADDRESS} from "./utils";
+import { NODE_ADDRESS } from "./utils";
 
 let web3;
 

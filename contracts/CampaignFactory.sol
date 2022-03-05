@@ -5,7 +5,7 @@ import "./Campaign.sol";
 contract CampaignFactory {
     address[] public deployedCampaigns;
 
-    function createCampaign(uint minimum) public {
+    function createCampaign(uint256 minimum) public {
         Campaign newCampaign = new Campaign(minimum, msg.sender);
         deployedCampaigns.push(address(newCampaign));
     }

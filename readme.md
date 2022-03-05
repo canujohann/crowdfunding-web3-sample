@@ -1,6 +1,6 @@
 # Kickstarter application sample
 
-Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity).
+Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity). This project is largely inspired form this [awesome tutorial](https://www.udemy.com/course/ethereum-and-solidity-the-complete-developers-guide/) available on udemy.
 
 ## stack
 

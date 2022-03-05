@@ -4,25 +4,25 @@ pragma solidity ^0.8.11;
 contract Campaign {
     struct Request {
         string description;
-        uint value;
+        uint256 value;
         address recipient;
         bool complete;
-        uint approvalCount;
+        uint256 approvalCount;
         mapping(address => bool) approvals;
     }
 
     Request[] public requests;
     address public manager;
-    uint public minimumContribution;
+    uint256 public minimumContribution;
     mapping(address => bool) public approvers;
-    uint public approversCount;
+    uint256 public approversCount;
 
     modifier restricted() {
         require(msg.sender == manager);
         _;
     }
 
-    constructor(uint minimum, address creator) {
+    constructor(uint256 minimum, address creator) {
         manager = creator;
         minimumContribution = minimum;
     }
@@ -34,8 +34,11 @@ contract Campaign {
         approversCount++;
     }
 
-    function createRequest(string calldata description, uint value, address recipient) public restricted {
-        
+    function createRequest(
+        string calldata description,
+        uint256 value,
+        address recipient
+    ) public restricted {
         // `Request` Struct containing a (nested) mapping cannot be constructed
         // Need to use the workaround below
         Request storage newRequest = requests.push();
@@ -46,7 +49,7 @@ contract Campaign {
         newRequest.approvalCount = 0;
     }
 
-    function approveRequest(uint index) public {
+    function approveRequest(uint256 index) public {
         Request storage request = requests[index];
 
         require(approvers[msg.sender]);
@@ -56,32 +59,40 @@ contract Campaign {
         request.approvalCount++;
     }
 
-    function finalizeRequest(uint index) public restricted {
+    function finalizeRequest(uint256 index) public restricted {
         Request storage request = requests[index];
 
         require(request.approvalCount > (approversCount / 2));
         require(!request.complete);
 
-        // TypeError: "send" and "transfer" are only available for 
+        // TypeError: "send" and "transfer" are only available for
         // objects of type "address payable", not "address".
         // Need to add the payable part
         payable(request.recipient).transfer(request.value);
         request.complete = true;
     }
-    
-    function getSummary() public view returns (
-      uint, uint, uint, uint, address
-      ) {
+
+    function getSummary()
+        public
+        view
+        returns (
+            uint256,
+            uint256,
+            uint256,
+            uint256,
+            address
+        )
+    {
         return (
-          minimumContribution,
-          address(this).balance,
-          requests.length,
-          approversCount,
-          manager
+            minimumContribution,
+            address(this).balance,
+            requests.length,
+            approversCount,
+            manager
         );
     }
-    
-    function getRequestsCount() public view returns (uint) {
+
+    function getRequestsCount() public view returns (uint256) {
         return requests.length;
     }
 }
