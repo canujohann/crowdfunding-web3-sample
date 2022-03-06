@@ -49,6 +49,8 @@ sequenceDiagram
 
 ### Setup
 
+> Please use nodeJS 14 or higher
+
 - Install packages with `npm i`
 
 ### How to deploy locally (ganache)
