@@ -36,6 +36,15 @@ sequenceDiagram
   end
 ```
 
+**Top**
+![top](/docs/top.png)
+
+**Campaign Details**
+![campaign details](/docs/campaign-details.png)
+
+**Request Details**
+![request details](/docs/request-details.png)
+
 ## Ethereum side (Smart Contract)
 
 ### Setup
@@ -57,7 +66,7 @@ _Ganache preview:_
 
 Run `npm run dev`
 
-> Truffle feature are not used for tests (`contract()`), but
+> Truffle feature are not used for tests (`contract()`), only standart mocha tests.
 
 ### How to deploy on Rindekin (infura):
 
@@ -68,6 +77,7 @@ WIP
 ### Setup
 
 - Install packages with `npm run install-fe`
+- Update the `NEXT_PUBLIC_FACTORY_ADDRESS` value in `kickstarter-fe/.env.local` with the Factory contract address (_available in the transactions tab of ganache_)
 - Run `npm run start-fe` to start server on port 3000
 
 ### How to run tests
