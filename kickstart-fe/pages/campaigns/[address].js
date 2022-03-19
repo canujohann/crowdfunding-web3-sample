@@ -1,40 +1,50 @@
-import React, { Component } from "react";
+import React, { useEffect } from "react";
 import { Card, Grid, Button } from "semantic-ui-react";
 import Layout from "../../components/Layout";
-import Campaign from "../../contracts/campaign";
-import web3 from "../../contracts/web3";
+import getCampaignInfo from "../../contracts/campaignUtil";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from "../../routes";
 
-class CampaignShow extends Component {
-  static async getInitialProps(props) {
-    const campaign = Campaign(props.query.address);
+const CampaignShow = (props) => {
+  // set state
+  const [summary, setSummary] = React.useState({
+    address: "",
+    minimumContribution: 0,
+    balance: "0",
+    requestsCount: 0,
+    approversCount: 0,
+    manager: "",
+  });
+  const [web3, setWeb3] = React.useState(null);
 
+  useEffect(async () => {
+    const [campaign, web3Context] = getCampaignInfo(props.address);
+    setWeb3(web3Context);
     const summary = await campaign.methods.getSummary().call();
 
-    return {
-      address: props.query.address,
+    setSummary({
+      address: props.address,
       minimumContribution: summary[0],
       balance: summary[1],
       requestsCount: summary[2],
       approversCount: summary[3],
       manager: summary[4],
-    };
-  }
+    });
+  }, []);
 
-  renderCards() {
+  const renderCards = () => {
     const {
       balance,
       manager,
       minimumContribution,
       requestsCount,
       approversCount,
-    } = this.props;
+    } = summary;
 
     const items = [
       {
         header: manager,
-        meta: "Address of Manager",
+        meta: "Address of Manager boubou",
         description:
           "The manager created this campaign and can create requests to withdraw money",
         style: { overflowWrap: "break-word" },
@@ -58,7 +68,7 @@ class CampaignShow extends Component {
           "Number of people who have already donated to this campaign",
       },
       {
-        header: web3.utils.fromWei(balance, "ether"),
+        header: web3?.utils?.fromWei(balance, "ether"),
         meta: "Campaign Balance (ether)",
         description:
           "The balance is how much money this campaign has left to spend.",
@@ -66,33 +76,37 @@ class CampaignShow extends Component {
     ];
 
     return <Card.Group items={items} />;
-  }
+  };
 
-  render() {
-    return (
-      <Layout>
-        <h3>Campaign Show</h3>
-        <Grid>
-          <Grid.Row>
-            <Grid.Column width={10}>{this.renderCards()}</Grid.Column>
-            <Grid.Column width={6}>
-              <ContributeForm address={this.props.address} />
-            </Grid.Column>
-          </Grid.Row>
+  return (
+    <Layout>
+      <h3>Campaign Show</h3>
+      <Grid>
+        <Grid.Row>
+          <Grid.Column width={10}>{renderCards()}</Grid.Column>
+          <Grid.Column width={6}>
+            <ContributeForm address={props.address} />
+          </Grid.Column>
+        </Grid.Row>
 
-          <Grid.Row>
-            <Grid.Column>
-              <Link route={`/campaigns/${this.props.address}/requests`}>
-                <a>
-                  <Button primary>View Requests</Button>
-                </a>
-              </Link>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
-      </Layout>
-    );
-  }
-}
+        <Grid.Row>
+          <Grid.Column>
+            <Link route={`/campaigns/${props.address}/requests`}>
+              <a>
+                <Button primary>View Requests</Button>
+              </a>
+            </Link>
+          </Grid.Column>
+        </Grid.Row>
+      </Grid>
+    </Layout>
+  );
+};
+
+// Method specific to nextJS to retrieve props
+CampaignShow.getInitialProps = async ({ query }) => {
+  const address = query.address;
+  return { address };
+};
 
 export default CampaignShow;

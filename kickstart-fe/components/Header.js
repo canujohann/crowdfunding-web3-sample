@@ -2,22 +2,25 @@ import React from "react";
 import { Menu } from "semantic-ui-react";
 import { Link } from "../routes";
 
-const Header = () => {
+const Header = (props) => {
   return (
-    <Menu style={{ marginTop: "10px" }}>
-      <Link route="/">
-        <a className="item">CrowdCoin</a>
-      </Link>
-      <Menu.Menu position="right">
+    <>
+      <Menu style={{ marginTop: "10px" }}>
         <Link route="/">
-          <a className="item">Campaigns</a>
+          <a className="item">CrowdCoin</a>
         </Link>
+        <Menu.Item name={`Your address is ${props.signer}`} active={true} />
+        <Menu.Menu position="right">
+          <Link route="/">
+            <a className="item">Campaigns</a>
+          </Link>
 
-        <Link route="/campaigns/new">
-          <a className="item">+</a>
-        </Link>
-      </Menu.Menu>
-    </Menu>
+          <Link route="/campaigns/new">
+            <a className="item">+</a>
+          </Link>
+        </Menu.Menu>
+      </Menu>
+    </>
   );
 };
 
