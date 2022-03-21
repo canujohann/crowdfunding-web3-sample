@@ -1,9 +1,24 @@
 import React, { useState, useEffect } from "react";
 import { Container, Message, Button } from "semantic-ui-react";
+import styled from "styled-components";
 import Web3 from "web3";
 import Header from "./Header";
 
 import "semantic-ui-css/semantic.min.css";
+
+const ButtonStyled = styled(Button)`
+  border: 0px none !important;
+  border-radius: 16px !important;
+  font-size: 16px !important;
+  transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s !important;
+  height: 32px !important;
+  padding: 0px 16px !important;
+  background-color: rgb(31, 199, 212) !important;
+  color: white !important;
+  &:hover {
+    opacity: 0.6 !important;
+  }
+`;
 
 const NoMetamask = () => {
   return (
@@ -17,8 +32,10 @@ const NoMetamask = () => {
 const NoConnection = (props) => {
   return (
     <Message>
-      <Message.Header>Please connect to MetaMask</Message.Header>
-      <Button onClick={props.connect}>Connect</Button>
+      <p>
+        Please connect to MetaMask&nbsp;
+        <ButtonStyled onClick={props.connect}>Connect</ButtonStyled>
+      </p>
     </Message>
   );
 };
