@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
 import { Button, Table } from "semantic-ui-react";
 import { Link } from "../../../routes";
 import Layout from "../../../components/Layout";
 import getCampaignInfo from "../../../contracts/campaignUtil";
 import RequestRow from "../../../components/RequestRow";
 
-const RequestIndex = (props) => {
+const RequestIndex = ({ address }) => {
   //states
   const [requests, setRequests] = useState([]);
   const [requestCount, setRequestCount] = useState(0);
@@ -16,19 +17,19 @@ const RequestIndex = (props) => {
   // TODO: when 0 requests returns, useAffect is called indefinitely
   useEffect(async () => {
     if (requests.length == 0) {
-      const [campaign, web3Context] = getCampaignInfo(props.address);
+      const [campaign, web3Context] = getCampaignInfo(address);
       setWeb3Context(web3Context);
       setCamp(campaign);
 
       const requestCountResult = await campaign.methods
         .getRequestsCount()
         .call();
-      setRequestCount(requestCountResult);
+      setRequestCount(parseInt(requestCountResult));
 
       const approversCountResult = await campaign.methods
         .approversCount()
         .call();
-      setApproversCount(approversCountResult);
+      setApproversCount(parseInt(approversCountResult));
 
       const requestsList = await Promise.all(
         Array(parseInt(requestCount))
@@ -50,18 +51,15 @@ const RequestIndex = (props) => {
     );
     return requests.map((request, index) => {
       return (
-        console.log("we are in the loop and campaign is ", camp),
-        (
-          <RequestRow
-            key={index}
-            id={index}
-            request={request}
-            address={props.address}
-            approversCount={approversCount}
-            web3Context={web3Context}
-            campaign={camp}
-          />
-        )
+        <RequestRow
+          key={index}
+          id={index}
+          request={request}
+          address={address}
+          approversCount={approversCount}
+          web3Context={web3Context}
+          campaign={camp}
+        />
       );
     });
   };
@@ -71,7 +69,7 @@ const RequestIndex = (props) => {
   return (
     <Layout>
       <h3>Requests</h3>
-      <Link route={`/campaigns/${props.address}/requests/new`}>
+      <Link route={`/campaigns/${address}/requests/new`}>
         <a>
           <Button primary floated="right" style={{ marginBottom: 10 }}>
             Add Request
@@ -100,6 +98,11 @@ const RequestIndex = (props) => {
 RequestIndex.getInitialProps = async ({ query }) => {
   const address = query.address;
   return { address };
+};
+
+// props types definition
+RequestIndex.propTypes = {
+  address: PropTypes.string.isRequired,
 };
 
 export default RequestIndex;

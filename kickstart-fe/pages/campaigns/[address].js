@@ -1,11 +1,12 @@
 import React, { useEffect } from "react";
+import PropTypes from "prop-types";
 import { Card, Grid, Button } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import getCampaignInfo from "../../contracts/campaignUtil";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from "../../routes";
 
-const CampaignShow = (props) => {
+const CampaignShow = ({ address }) => {
   // set state
   const [summary, setSummary] = React.useState({
     address: "",
@@ -18,12 +19,12 @@ const CampaignShow = (props) => {
   const [web3, setWeb3] = React.useState(null);
 
   useEffect(async () => {
-    const [campaign, web3Context] = getCampaignInfo(props.address);
+    const [campaign, web3Context] = getCampaignInfo(address);
     setWeb3(web3Context);
     const summary = await campaign.methods.getSummary().call();
 
     setSummary({
-      address: props.address,
+      address: address,
       minimumContribution: summary[0],
       balance: summary[1],
       requestsCount: summary[2],
@@ -85,13 +86,13 @@ const CampaignShow = (props) => {
         <Grid.Row>
           <Grid.Column width={10}>{renderCards()}</Grid.Column>
           <Grid.Column width={6}>
-            <ContributeForm address={props.address} />
+            <ContributeForm address={address} />
           </Grid.Column>
         </Grid.Row>
 
         <Grid.Row>
           <Grid.Column>
-            <Link route={`/campaigns/${props.address}/requests`}>
+            <Link route={`/campaigns/${address}/requests`}>
               <a>
                 <Button primary>View Requests</Button>
               </a>
@@ -107,6 +108,11 @@ const CampaignShow = (props) => {
 CampaignShow.getInitialProps = async ({ query }) => {
   const address = query.address;
   return { address };
+};
+
+// props types definition
+CampaignShow.propTypes = {
+  address: PropTypes.string.isRequired,
 };
 
 export default CampaignShow;

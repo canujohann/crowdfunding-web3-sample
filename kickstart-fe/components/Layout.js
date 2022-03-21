@@ -5,7 +5,7 @@ import Header from "./Header";
 
 import "semantic-ui-css/semantic.min.css";
 
-const NoMetamask = (props) => {
+const NoMetamask = () => {
   return (
     <Message>
       <Message.Header>Metamask requiered</Message.Header>
@@ -27,7 +27,7 @@ const Layout = (props) => {
   // States definition
   const [hasMetamask, setHasMetamask] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
-  const [address, setAddress] = useState(null);
+  const [address, setAddress] = useState("");
 
   // Connect dapp to metamask
   var connect = async () => {
@@ -58,7 +58,7 @@ const Layout = (props) => {
   return (
     <div>
       <Container>
-        <Header signer={address} />
+        <Header signer={address} test2="fd" />
         {!hasMetamask && <NoMetamask />}
         {hasMetamask && !isConnected && <NoConnection connect={connect} />}
         {hasMetamask && isConnected && props.children}
@@ -66,4 +66,5 @@ const Layout = (props) => {
     </div>
   );
 };
+
 export default Layout;

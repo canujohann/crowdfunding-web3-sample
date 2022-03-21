@@ -1,10 +1,11 @@
 import React, { useState } from "react";
+import PropTypes from "prop-types";
 import { Form, Button, Message, Input } from "semantic-ui-react";
 import getCampaignInfo from "../../../../contracts/campaignUtil";
 import { Link, Router } from "../../../../routes";
 import Layout from "../../../../components/Layout";
 
-const RequestNew = (props) => {
+const RequestNew = ({ address }) => {
   // States definition
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
@@ -18,7 +19,7 @@ const RequestNew = (props) => {
     setLoading(true);
     setErrorMessage("");
 
-    const [campaign, web3Context] = getCampaignInfo(props.address);
+    const [campaign, web3Context] = getCampaignInfo(address);
 
     try {
       const accounts = await web3Context.eth.getAccounts();
@@ -29,7 +30,7 @@ const RequestNew = (props) => {
           recipient
         )
         .send({ from: accounts[0] });
-      Router.pushRoute(`/campaigns/${props.address}/requests`);
+      Router.pushRoute(`/campaigns/${address}/requests`);
     } catch (err) {
       setErrorMessage(err.message);
     }
@@ -38,7 +39,7 @@ const RequestNew = (props) => {
 
   return (
     <Layout>
-      <Link route={`/campaigns/${props.address}/requests`}>
+      <Link route={`/campaigns/${address}/requests`}>
         <a>Back</a>
       </Link>
       <h3>Create a Request</h3>
@@ -81,6 +82,11 @@ const RequestNew = (props) => {
 RequestNew.getInitialProps = async ({ query }) => {
   const address = query.address;
   return { address };
+};
+
+// Props types definition
+RequestNew.propTypes = {
+  address: PropTypes.string.isRequired,
 };
 
 export default RequestNew;

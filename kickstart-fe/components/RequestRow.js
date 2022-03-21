@@ -1,11 +1,12 @@
 import React, { Component } from "react";
+import PropTypes from "prop-types";
 import Router from "next/router";
 import { Table, Button } from "semantic-ui-react";
 
-const RequestRow = (props) => {
+const RequestRow = ({ id, request, approversCount, web3Context, campaign }) => {
   const onApprove = async () => {
-    const accounts = await props.web3Context.eth.getAccounts();
-    await props.campaign.methods.approveRequest(props.id).send({
+    const accounts = await web3Context.eth.getAccounts();
+    await campaign.methods.approveRequest(id).send({
       from: accounts[0],
     });
   };
@@ -15,14 +16,13 @@ const RequestRow = (props) => {
   };
 
   const onFinalize = async () => {
-    const accounts = await props.web3Context.eth.getAccounts();
-    await props.campaign.methods.finalizeRequest(props.id).send({
+    const accounts = await web3Context.eth.getAccounts();
+    await campaign.methods.finalizeRequest(id).send({
       from: accounts[0],
     });
   };
 
   const { Row, Cell } = Table;
-  const { id, request, approversCount } = props;
   const readyToFinalize = request.approvalCount > approversCount / 2;
 
   return (
@@ -32,7 +32,7 @@ const RequestRow = (props) => {
     >
       <Cell>{id}</Cell>
       <Cell>{request.description}</Cell>
-      <Cell>{props.web3Context.utils.fromWei(request.value, "ether")}</Cell>
+      <Cell>{web3Context.utils.fromWei(request.value, "ether")}</Cell>
       <Cell>{request.recipient}</Cell>
       <Cell>
         {request.approvalCount}/{approversCount}
@@ -52,10 +52,26 @@ const RequestRow = (props) => {
         )}
         <Button color="teal" basic onClick={reload}>
           Reload
+          {typeof approversCount} here
         </Button>
       </Cell>
     </Row>
   );
+};
+
+// Prop types definition
+RequestRow.propTypes = {
+  web3Context: PropTypes.any.isRequired,
+  id: PropTypes.number.isRequired,
+  campaign: PropTypes.any.isRequired,
+  request: PropTypes.shape({
+    description: PropTypes.string,
+    value: PropTypes.string,
+    recipient: PropTypes.string,
+    coplete: PropTypes.bool,
+    approvalCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
+  }),
+  approversCount: PropTypes.number.isRequired,
 };
 
 export default RequestRow;
