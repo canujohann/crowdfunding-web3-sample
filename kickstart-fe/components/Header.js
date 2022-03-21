@@ -1,8 +1,15 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { Menu } from "semantic-ui-react";
+import styled from "styled-components";
 import { Link } from "../routes";
+import { showFriendlyAddress } from "../common/utils";
 
+const ConnectionInfo = styled.p`
+  text-align: right;
+  font-size: 14px;
+  color: #1678c2;
+`;
 const Header = ({ signer }) => {
   return (
     <>
@@ -10,7 +17,6 @@ const Header = ({ signer }) => {
         <Link route="/">
           <a className="item">CrowdCoin</a>
         </Link>
-        <Menu.Item name={`Your address is ${signer}`} active={true} />
         <Menu.Menu position="right">
           <Link route="/">
             <a className="item">Campaigns</a>
@@ -21,6 +27,9 @@ const Header = ({ signer }) => {
           </Link>
         </Menu.Menu>
       </Menu>
+      <ConnectionInfo>
+        You are logged as {showFriendlyAddress(signer)}
+      </ConnectionInfo>
     </>
   );
 };
