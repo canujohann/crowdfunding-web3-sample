@@ -61,6 +61,8 @@ sequenceDiagram
 
 > Truffle has a embedded blockchain but ganache has a nice interface, making transactions/users/contracts validation easier. `truffle-config.js` is already set to target Ganache by default, nothing to do on your side.
 
+> If you do some change to your contract and want to redeploy them as new contract, use `truffle migrate --reset`
+
 _Ganache preview:_
 ![Ganache preview](docs/ganache.png)
 
