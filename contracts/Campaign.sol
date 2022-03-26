@@ -27,8 +27,13 @@ contract Campaign {
         minimumContribution = minimum;
     }
 
+    /**
+    Can contribute only if amount is greater than minimum contribution
+    and if sender has not contributed before
+     */
     function contribute() public payable {
         require(msg.value > minimumContribution);
+        require(approvers[msg.sender] == false);
 
         approvers[msg.sender] = true;
         approversCount++;
@@ -72,6 +77,7 @@ contract Campaign {
         request.complete = true;
     }
 
+    // Get basic information for a specific campaign
     function getSummary()
         public
         view
@@ -80,7 +86,8 @@ contract Campaign {
             uint256,
             uint256,
             uint256,
-            address
+            address,
+            bool
         )
     {
         return (
@@ -88,7 +95,8 @@ contract Campaign {
             address(this).balance,
             requests.length,
             approversCount,
-            manager
+            manager,
+            approvers[msg.sender]
         );
     }
 

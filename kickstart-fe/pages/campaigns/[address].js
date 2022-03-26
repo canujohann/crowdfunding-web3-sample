@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
-import { Card, Grid, Button } from "semantic-ui-react";
+import { Card, Grid, Button, Message } from "semantic-ui-react";
 import Layout from "../../components/Layout";
 import getCampaignInfo from "../../contracts/campaignUtil";
 import ContributeForm from "../../components/ContributeForm";
@@ -15,6 +15,7 @@ const CampaignShow = ({ address }) => {
     requestsCount: 0,
     approversCount: 0,
     manager: "",
+    alreadyContributed: false,
   });
   const [web3, setWeb3] = React.useState(null);
 
@@ -30,6 +31,7 @@ const CampaignShow = ({ address }) => {
       requestsCount: summary[2],
       approversCount: summary[3],
       manager: summary[4],
+      alreadyContributed: summary[5],
     });
   }, []);
 
@@ -86,7 +88,13 @@ const CampaignShow = ({ address }) => {
         <Grid.Row>
           <Grid.Column width={10}>{renderCards()}</Grid.Column>
           <Grid.Column width={6}>
-            <ContributeForm address={address} />
+            {!summary.alreadyContributed ? (
+              <ContributeForm address={address} />
+            ) : (
+              <Message compact color="green">
+                Already contributed !
+              </Message>
+            )}
           </Grid.Column>
         </Grid.Row>
 
