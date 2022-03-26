@@ -1,23 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Container, Message, Button } from "semantic-ui-react";
+import Image from "next/image";
 import styled from "styled-components";
 import Web3 from "web3";
 import Header from "./Header";
+import icon from "../public/metamask.png";
 
 import "semantic-ui-css/semantic.min.css";
 
-const ButtonStyled = styled(Button)`
-  border: 0px none !important;
-  border-radius: 16px !important;
-  font-size: 16px !important;
-  transition: background-color 0.2s ease 0s, opacity 0.2s ease 0s !important;
-  height: 32px !important;
-  padding: 0px 16px !important;
-  background-color: rgb(31, 199, 212) !important;
-  color: white !important;
-  &:hover {
-    opacity: 0.6 !important;
-  }
+const DivStyled = styled.div`
+  margin-top: 10px;
+`;
+
+const CenterDiv = styled.div`
+  text-align: center;
 `;
 
 const NoMetamask = () => {
@@ -31,12 +27,14 @@ const NoMetamask = () => {
 
 const NoConnection = (props) => {
   return (
-    <Message>
-      <p>
-        Please connect to MetaMask&nbsp;
-        <ButtonStyled onClick={props.connect}>Connect</ButtonStyled>
-      </p>
-    </Message>
+    <CenterDiv>
+      <Button onClick={props.connect} color="teal">
+        Connect to Metamask
+      </Button>
+      <DivStyled>
+        <Image src={icon} width={50} height={50} />
+      </DivStyled>
+    </CenterDiv>
   );
 };
 
@@ -70,12 +68,12 @@ const Layout = (props) => {
     } else {
       setIsConnected(false);
     }
-  }, []);
+  }, [address]);
 
   return (
     <div>
       <Container>
-        <Header signer={address} test2="fd" />
+        <Header signer={address} />
         {!hasMetamask && <NoMetamask />}
         {hasMetamask && !isConnected && <NoConnection connect={connect} />}
         {hasMetamask && isConnected && props.children}

@@ -27,9 +27,11 @@ const Header = ({ signer }) => {
           </Link>
         </Menu.Menu>
       </Menu>
-      <ConnectionInfo>
-        You are logged as {showFriendlyAddress(signer)}
-      </ConnectionInfo>
+      {signer && (
+        <ConnectionInfo>
+          You are logged as {showFriendlyAddress(signer)}
+        </ConnectionInfo>
+      )}
     </>
   );
 };
