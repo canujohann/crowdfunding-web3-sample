@@ -28,7 +28,7 @@ const NoMetamask = () => {
 const NoConnection = (props) => {
   return (
     <CenterDiv>
-      <Button onClick={props.connect} color="teal">
+      <Button onClick={props.connect} color="blue">
         Connect to Metamask
       </Button>
       <DivStyled>

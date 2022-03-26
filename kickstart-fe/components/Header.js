@@ -1,14 +1,12 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Menu } from "semantic-ui-react";
+import { Menu, Button } from "semantic-ui-react";
 import styled from "styled-components";
 import { Link } from "../routes";
 import { showFriendlyAddress } from "../common/utils";
 
 const ConnectionInfo = styled.p`
   text-align: right;
-  font-size: 14px;
-  color: #1678c2;
 `;
 const Header = ({ signer }) => {
   return (
@@ -29,7 +27,9 @@ const Header = ({ signer }) => {
       </Menu>
       {signer && (
         <ConnectionInfo>
-          You are logged as {showFriendlyAddress(signer)}
+          <Button inverted color="blue">
+            You are logged as {showFriendlyAddress(signer)}
+          </Button>
         </ConnectionInfo>
       )}
     </>
