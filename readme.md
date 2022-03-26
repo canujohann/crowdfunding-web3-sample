@@ -52,9 +52,10 @@ sequenceDiagram
 
 ![campaign details](/docs/campaign-details.png)
 
-### Request Details
+### Request
 
-![request details](/docs/request-details.png)
+![request top](/docs/request-list.png)
+![request creatio](/docs/request-creation.png)
 
 ## Ethereum side (Smart Contract)
 

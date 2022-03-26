@@ -69,11 +69,6 @@ const RequestNew = ({ address }) => {
         <Button primary loading={loading}>
           Create!
         </Button>
-        <div>
-          value is {value}
-          description is {description}
-          recipient is {recipient}
-        </div>
       </Form>
     </Layout>
   );
