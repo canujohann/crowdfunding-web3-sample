@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { Container, Message, Button } from "semantic-ui-react";
 import Image from "next/image";
 import styled from "styled-components";
-import Web3 from "web3";
 import Header from "./Header";
 import icon from "../public/metamask.png";
 
@@ -49,6 +48,11 @@ const Layout = (props) => {
     if (window.ethereum) {
       const accounts = await window.ethereum.request({
         method: "eth_requestAccounts",
+      });
+
+      // Check if any change in accounts
+      window.ethereum.on("accountsChanged", function (accounts) {
+        setAddress(accounts[0]);
       });
 
       // Set the address (first address from metamask)
