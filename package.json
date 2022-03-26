@@ -12,6 +12,7 @@
     "test-fe": "cd kickstart-fe && npm run test",
     "compile": "truffle compile",
     "migrate": "truffle migrate",
+    "migrate-reset": "truffle migrate --reset",
     "test": "mocha"
   },
   "author": "",

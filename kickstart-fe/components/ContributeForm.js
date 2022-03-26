@@ -19,8 +19,6 @@ const ContributeForm = ({ address }) => {
       const [campaign, web3] = getCampaignInfo(address);
 
       // Contribute to campaign
-      // TODO user should be able to contribute only once to the same campain
-      // TODO manager should not be able to contribute to a campaign
       const accounts = await web3.eth.getAccounts();
       await campaign.methods.contribute().send({
         from: accounts[0],

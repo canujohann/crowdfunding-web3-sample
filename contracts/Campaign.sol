@@ -30,10 +30,12 @@ contract Campaign {
     /**
     Can contribute only if amount is greater than minimum contribution
     and if sender has not contributed before
+    and if sender is not the campaign manager.
      */
     function contribute() public payable {
         require(msg.value > minimumContribution);
         require(approvers[msg.sender] == false);
+        require(msg.sender != manager);
 
         approvers[msg.sender] = true;
         approversCount++;
@@ -77,7 +79,16 @@ contract Campaign {
         request.complete = true;
     }
 
-    // Get basic information for a specific campaign
+    /**
+    Get basic information for a specific campaign:
+    - Minimum contribution (0)
+    - Balance of the contract (1)
+    - number of requests (2)
+    - number of contributors (3)
+    - Manager address (4)
+    - Is current user eligible for contribution (5)
+
+     */
     function getSummary()
         public
         view
@@ -96,7 +107,7 @@ contract Campaign {
             requests.length,
             approversCount,
             manager,
-            approvers[msg.sender]
+            (approvers[msg.sender] || msg.sender == manager)
         );
     }
 

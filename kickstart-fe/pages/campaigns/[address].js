@@ -5,6 +5,7 @@ import Layout from "../../components/Layout";
 import getCampaignInfo from "../../contracts/campaignUtil";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from "../../routes";
+import { showFriendlyAddress } from "../../common/utils";
 
 const CampaignShow = ({ address }) => {
   // set state
@@ -46,31 +47,36 @@ const CampaignShow = ({ address }) => {
 
     const items = [
       {
-        header: manager,
-        meta: "Address of Manager boubou",
+        color: "blue",
+        header: showFriendlyAddress(manager),
+        meta: "Address of Manager",
         description:
           "The manager created this campaign and can create requests to withdraw money",
         style: { overflowWrap: "break-word" },
       },
       {
+        color: "blue",
         header: minimumContribution,
         meta: "Minimum Contribution (wei)",
         description:
           "You must contribute at least this much wei to become an approver",
       },
       {
+        color: "blue",
         header: requestsCount,
         meta: "Number of Requests",
         description:
           "A request tries to withdraw money from the contract. Requests must be approved by approvers",
       },
       {
+        color: "blue",
         header: approversCount,
         meta: "Number of Approvers",
         description:
           "Number of people who have already donated to this campaign",
       },
       {
+        color: "blue",
         header: web3?.utils?.fromWei(balance, "ether"),
         meta: "Campaign Balance (ether)",
         description:
@@ -78,7 +84,7 @@ const CampaignShow = ({ address }) => {
       },
     ];
 
-    return <Card.Group items={items} />;
+    return <Card.Group color="blue" items={items} />;
   };
 
   return (
@@ -92,7 +98,7 @@ const CampaignShow = ({ address }) => {
               <ContributeForm address={address} />
             ) : (
               <Message compact color="green">
-                Already contributed !
+                Already contributed, or you are the manager of the campaign.
               </Message>
             )}
           </Grid.Column>

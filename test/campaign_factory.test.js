@@ -11,6 +11,9 @@ let factory;
 let campaignAddress;
 let campaign;
 
+// TODO check if user can contribuate only once
+// TODO check if manager cannot contribute
+
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
 
@@ -24,10 +27,7 @@ beforeEach(async () => {
   });
 
   [campaignAddress] = await factory.methods.getDeployedCampaigns().call();
-  campaign = await new web3.eth.Contract(
-    compiledCampaign.abi,
-    campaignAddress
-  );
+  campaign = await new web3.eth.Contract(compiledCampaign.abi, campaignAddress);
 });
 
 describe("Campaigns", () => {
