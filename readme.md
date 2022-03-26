@@ -11,6 +11,7 @@ Web3 sample project to intereact between a react application (NextJs) and a smar
 - MetaMask
 - Truffle
 - Ganache
+- Adobe Free random logo generator
 
 ## High Level Design
 
@@ -36,17 +37,23 @@ sequenceDiagram
   end
 ```
 
-**Top**
+## Screen captures
+
+### Top page
+
 ![top](/docs/top-unsigned.png)
 ![top](/docs/top.png)
 
-**Campaigns top**
+### Campaigns top
+
 ![campaigns top](/docs/campaigns-top.png)
 
-**Campaign Details**
+### Campaign Details
+
 ![campaign details](/docs/campaign-details.png)
 
-**Request Details**
+### Request Details
+
 ![request details](/docs/request-details.png)
 
 ## Ethereum side (Smart Contract)
