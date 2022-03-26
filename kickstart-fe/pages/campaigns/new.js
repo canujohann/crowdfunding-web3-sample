@@ -21,7 +21,7 @@ const CampaignNew = () => {
         from: accounts[0],
       });
 
-      Router.pushRoute("/");
+      Router.pushRoute("/campaigns");
     } catch (err) {
       setErrorMessage(err.message);
     }

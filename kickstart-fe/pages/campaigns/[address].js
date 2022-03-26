@@ -90,6 +90,13 @@ const CampaignShow = ({ address }) => {
   return (
     <Layout>
       <h3>Campaign Show</h3>
+      <Link route={`/campaigns/${address}/requests`}>
+        <a>
+          <Button primary>View Requests</Button>
+        </a>
+      </Link>
+      <br />
+      <br />
       <Grid>
         <Grid.Row>
           <Grid.Column width={10}>{renderCards()}</Grid.Column>
@@ -101,16 +108,6 @@ const CampaignShow = ({ address }) => {
                 Already contributed, or you are the manager of the campaign.
               </Message>
             )}
-          </Grid.Column>
-        </Grid.Row>
-
-        <Grid.Row>
-          <Grid.Column>
-            <Link route={`/campaigns/${address}/requests`}>
-              <a>
-                <Button primary>View Requests</Button>
-              </a>
-            </Link>
           </Grid.Column>
         </Grid.Row>
       </Grid>
