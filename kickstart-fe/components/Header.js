@@ -62,8 +62,8 @@ const Header = ({ signer, networkId }) => {
       </Menu>
       <Message color="red" size="mini">
         <p>
-          You are not on the real ethereum network, but on{" "}
-          {showFriendlyAddress(signer)}. Be careful !
+          You are not on the real ethereum network, but on "
+          {showNetworkName(networkId)}". Be careful !
         </p>
       </Message>
     </>
