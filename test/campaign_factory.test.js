@@ -11,9 +11,6 @@ let factory;
 let campaignAddress;
 let campaign;
 
-// TODO check if user can contribuate only once
-// TODO check if manager cannot contribute
-
 beforeEach(async () => {
   accounts = await web3.eth.getAccounts();
 
@@ -50,6 +47,35 @@ describe("Campaigns", () => {
     assert(isContributor);
   });
 
+  it("doesn't allow manager to contribute to his own campaign", async () => {
+    try {
+      await campaign.methods.contribute().send({
+        value: "200",
+        from: accounts[0],
+      });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  });
+
+  it("doesn't allow to contribute twice to the same campaig", async () => {
+    await campaign.methods.contribute().send({
+      value: "200",
+      from: accounts[1],
+    });
+
+    try {
+      await campaign.methods.contribute().send({
+        value: "200",
+        from: accounts[2],
+      });
+      assert(false);
+    } catch (err) {
+      assert(err);
+    }
+  });
+
   it("requires a minimum contribution", async () => {
     try {
       await campaign.methods.contribute().send({
@@ -70,22 +96,21 @@ describe("Campaigns", () => {
         gas: "1000000",
       });
     const request = await campaign.methods.requests(0).call();
-
     assert.equal("Buy batteries", request.description);
   });
 
   it("processes requests", async () => {
     await campaign.methods.contribute().send({
-      from: accounts[0],
+      from: accounts[1],
       value: web3.utils.toWei("10", "ether"),
     });
 
     await campaign.methods
-      .createRequest("A", web3.utils.toWei("5", "ether"), accounts[1])
+      .createRequest("A", web3.utils.toWei("5", "ether"), accounts[2])
       .send({ from: accounts[0], gas: "1000000" });
 
     await campaign.methods.approveRequest(0).send({
-      from: accounts[0],
+      from: accounts[1],
       gas: "1000000",
     });
 
@@ -94,10 +119,9 @@ describe("Campaigns", () => {
       gas: "1000000",
     });
 
-    let balance = await web3.eth.getBalance(accounts[1]);
+    let balance = await web3.eth.getBalance(accounts[2]);
     balance = web3.utils.fromWei(balance, "ether");
     balance = parseFloat(balance);
-    console.log(balance);
     assert(balance > 104);
   });
 });
