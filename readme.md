@@ -60,7 +60,7 @@ _Ganache preview:_
 
 Run `npm run dev`
 
-> Truffle feature are not used for tests (`contract()`), only standart mocha tests.
+> Truffle features are not used for tests (`contract()`), only standart mocha tests.
 
 ### How to deploy on Rindekin (infura):
 
