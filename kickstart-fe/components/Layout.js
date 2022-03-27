@@ -42,6 +42,7 @@ const Layout = (props) => {
   const [hasMetamask, setHasMetamask] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState("");
+  const [networkId, setNetworkId] = useState("");
 
   // Connect dapp to metamask
   var connect = async () => {
@@ -57,6 +58,9 @@ const Layout = (props) => {
 
       // Set the address (first address from metamask)
       setAddress(accounts[0]);
+
+      // Set the network id
+      setNetworkId(window.ethereum.networkVersion);
     }
   };
 
@@ -66,6 +70,7 @@ const Layout = (props) => {
 
     // Check if metamask is connected
     const accounts = await window.ethereum.request({ method: "eth_accounts" });
+
     if (accounts.length > 0) {
       setIsConnected(true);
       connect();
@@ -77,7 +82,7 @@ const Layout = (props) => {
   return (
     <div>
       <Container>
-        <Header signer={address} />
+        <Header signer={address} networkId={networkId} />
         {!hasMetamask && <NoMetamask />}
         {hasMetamask && !isConnected && <NoConnection connect={connect} />}
         {hasMetamask && isConnected && props.children}

@@ -1,10 +1,10 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Menu, Button, Icon } from "semantic-ui-react";
+import { Menu, Button, Icon, Message } from "semantic-ui-react";
 import Image from "next/image";
 import styled from "styled-components";
 import { Link } from "../routes";
-import { showFriendlyAddress } from "../common/utils";
+import { showFriendlyAddress, showNetworkName } from "../common/utils";
 import logo from "../public/coin-starter-logos.png";
 
 const TitleStyled = styled.p`
@@ -12,7 +12,7 @@ const TitleStyled = styled.p`
   font-size: 1.5em;
 `;
 
-const Header = ({ signer }) => {
+const Header = ({ signer, networkId }) => {
   return (
     <>
       <Menu icon="labeled" secondary style={{ marginTop: "10px" }}>
@@ -26,11 +26,18 @@ const Header = ({ signer }) => {
         </Menu.Item>
         <Menu.Menu position="right">
           {signer && (
-            <Menu.Item>
-              <Button inverted color="blue">
-                You are logged as {showFriendlyAddress(signer)}
-              </Button>
-            </Menu.Item>
+            <>
+              <Menu.Item>
+                <Button inverted color="blue">
+                  You are logged as {showFriendlyAddress(signer)}
+                </Button>
+              </Menu.Item>
+              <Menu.Item>
+                <Button inverted color="purple">
+                  Network : {showNetworkName(networkId)}
+                </Button>
+              </Menu.Item>
+            </>
           )}
           <Link route="/">
             <a className="item">
@@ -53,6 +60,12 @@ const Header = ({ signer }) => {
           </Link>
         </Menu.Menu>
       </Menu>
+      <Message color="red" size="mini">
+        <p>
+          You are not on the real ethereum network, but on{" "}
+          {showFriendlyAddress(signer)}. Be careful !
+        </p>
+      </Message>
     </>
   );
 };
@@ -60,6 +73,7 @@ const Header = ({ signer }) => {
 // Prop types definition
 Header.propTypes = {
   signer: PropTypes.string.isRequired,
+  networkId: PropTypes.string.isRequired,
 };
 
 export default Header;
