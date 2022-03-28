@@ -37,7 +37,7 @@ sequenceDiagram
   end
 ```
 
-## Setup (smart contracts)
+## Ethereum side (Smart Contract)
 
 > Please use nodeJS 14 or higher
 
@@ -107,5 +107,3 @@ Because of the complexity of mocking Metamask, no e2e tests (cypress,etc.).
 
 ![request top](/docs/request-list.png)
 ![request creatio](/docs/request-creation.png)
-
-## Ethereum side (Smart Contract)
