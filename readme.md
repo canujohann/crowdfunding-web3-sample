@@ -1,6 +1,6 @@
 # Coin starter
 
-Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity). This project is  inspired from this [tutorial](https://shorturl.at/bfhrJ) available on udemy.
+Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity). This project is inspired from this [tutorial](https://shorturl.at/bfhrJ) available on udemy.
 
 ## Stack
 
@@ -84,7 +84,9 @@ NEXT_PUBLIC_NETWORK_ID=5777
 
 ### How to run tests
 
-Run `npm run test-fe`
+Run `npm run test-fe` to run unit tests of components.
+
+Because of the complexity of mocking Metamask, no e2e tests (cypress,etc.).
 
 ## Screen captures
 
