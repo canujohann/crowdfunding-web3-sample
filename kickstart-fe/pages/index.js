@@ -1,7 +1,8 @@
 import React from "react";
 import Image from "next/image";
-import logo from "../public/coin-starter-logos_black.png";
 import styled from "styled-components";
+
+import logo from "../public/coin-starter-logos_black.png";
 import Layout from "../components/Layout";
 
 const LogoWrapperStyled = styled.div`
@@ -13,7 +14,7 @@ const Index = (props) => {
   return (
     <Layout>
       <LogoWrapperStyled>
-        <Image src={logo} />
+        <Image src={logo} alt="Coin starter top" />
       </LogoWrapperStyled>
     </Layout>
   );

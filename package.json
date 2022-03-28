@@ -9,7 +9,7 @@
   "scripts": {
     "install-fe": "cd kickstart-fe && npm install",
     "start-fe": "cd kickstart-fe && npm run dev",
-    "test-fe": "cd kickstart-fe && npm run test",
+    "test-fe": "cd kickstart-fe && npm run test:ci",
     "compile": "truffle compile",
     "migrate": "truffle migrate",
     "migrate-reset": "truffle migrate --reset",
