@@ -7,6 +7,7 @@ Web3 sample project to intereact between a react application (NextJs) and a smar
 - React (Nextjs)
 - Semantic-ui
 - Mocha
+- Solidity (0.8.11)
 - Web3 library
 - MetaMask
 - Truffle
