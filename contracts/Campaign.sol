@@ -1,7 +1,11 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.11;
 
+/**
+Main contract for campaign
+ */
 contract Campaign {
+    // Structure for request
     struct Request {
         string description;
         uint256 value;
@@ -11,12 +15,24 @@ contract Campaign {
         mapping(address => bool) approvals;
     }
 
+    // All requests registered
     Request[] public requests;
+
+    // Manager(creator) address for this campaign
     address public manager;
+
+    // Minimum amount needed for contributing to the campaign
     uint256 public minimumContribution;
+
+    // Mapping (not list) of contributors to this campaign
     mapping(address => bool) public approvers;
+
+    // Total number of contributors
     uint256 public approversCount;
 
+    /**
+    Modifier to limit access to campaign creator (aka manager)
+    */
     modifier restricted() {
         require(msg.sender == manager);
         _;
@@ -41,6 +57,10 @@ contract Campaign {
         approversCount++;
     }
 
+    /**
+    Method call by the FactoryCampaign Contract
+    Should not be directly called by the user !
+     */
     function createRequest(
         string calldata description,
         uint256 value,
@@ -56,6 +76,9 @@ contract Campaign {
         newRequest.approvalCount = 0;
     }
 
+    /**
+    Approve one specific request
+     */
     function approveRequest(uint256 index) public {
         Request storage request = requests[index];
 
@@ -66,6 +89,9 @@ contract Campaign {
         request.approvalCount++;
     }
 
+    /**
+    Send/transfer token from the contract to the pre-registered address
+     */
     function finalizeRequest(uint256 index) public restricted {
         Request storage request = requests[index];
 
@@ -87,7 +113,6 @@ contract Campaign {
     - number of contributors (3)
     - Manager address (4)
     - Is current user eligible for contribution (5)
-
      */
     function getSummary()
         public
@@ -111,6 +136,9 @@ contract Campaign {
         );
     }
 
+    /**
+    Return total number of Request for this campaign
+     */
     function getRequestsCount() public view returns (uint256) {
         return requests.length;
     }
