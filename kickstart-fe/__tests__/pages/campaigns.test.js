@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import CampaignIndex from "@/pages/Campaigns";
+import CampaignIndex from "@/pages/campaigns";
 
 jest.mock("@/components/Layout", () => ({ children }) => <>{children}</>);
 
