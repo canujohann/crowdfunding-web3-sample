@@ -1,7 +1,7 @@
-import type { provider } from "web3-core";
+import type { MetaMaskInpageProvider } from "@metamask/providers";
 
 declare global {
   interface Window {
-    ethereum?: provider;
+    ethereum?: MetaMaskInpageProvider;
   }
 }

@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import Router from "next/router";
 import { Table, Button } from "semantic-ui-react";
 
@@ -30,7 +30,7 @@ const RequestRow = (props: RequestRowPropsType) => {
   };
 
   const reload = () => {
-    Router.reload(window.location.pathname);
+    Router.reload();
   };
 
   const onFinalize = async () => {
