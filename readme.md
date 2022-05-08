@@ -68,6 +68,20 @@ WIP
 
 ## FE side (Nextjs)
 
+### Prepare your browser
+
+You need to install Metamask extension on your browser
+
+**please never use your real wallet for that .... install it on a different browser, just to avoid any risk.**
+
+Add the local blockchain network in MetaMask by entering the RPC URL and Chain ID. Default Value are http://127.0.0.1:8545 and 1337 respectively.
+
+![add ganache network to metamask](/docs/metamask-add-local-ganache.png)
+
+Be sure to select this network is selected :
+
+![confirm ganache network to metamask](/docs/confirm-metamask-local.png)
+
 ### Setup
 
 - Install packages with `npm run install-fe`
