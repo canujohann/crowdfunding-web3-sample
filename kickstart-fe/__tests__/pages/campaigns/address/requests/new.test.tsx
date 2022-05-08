@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import New from "@/pages/campaigns/[address]/requests/new.js";
+import New from "@/pages/campaigns/[address]/requests/new";
 
 jest.mock("@/components/Layout", () => ({ children }) => <>{children}</>);
 

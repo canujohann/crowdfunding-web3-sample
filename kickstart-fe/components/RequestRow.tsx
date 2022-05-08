@@ -1,9 +1,27 @@
 import React, { Component } from "react";
-import PropTypes from "prop-types";
 import Router from "next/router";
 import { Table, Button } from "semantic-ui-react";
 
-const RequestRow = ({ id, request, approversCount, web3Context, campaign }) => {
+export type RequestRowPropsType = {
+  id: number;
+  campaign: any;
+  approversCount: number;
+  web3Context: any;
+  request: {
+    description: string;
+    value: string;
+    recipient: string;
+    complete: boolean;
+    approvalCount: string | number;
+  }
+};
+
+const RequestRow = (props: RequestRowPropsType) => {
+  const { id, request, approversCount, web3Context, campaign } = props;
+
+  const { Row, Cell } = Table;
+  const readyToFinalize = request.approvalCount > approversCount / 2;
+  
   const onApprove = async () => {
     const accounts = await web3Context.eth.getAccounts();
     await campaign.methods.approveRequest(id).send({
@@ -22,8 +40,6 @@ const RequestRow = ({ id, request, approversCount, web3Context, campaign }) => {
     });
   };
 
-  const { Row, Cell } = Table;
-  const readyToFinalize = request.approvalCount > approversCount / 2;
 
   return (
     <Row
@@ -57,21 +73,6 @@ const RequestRow = ({ id, request, approversCount, web3Context, campaign }) => {
       </Cell>
     </Row>
   );
-};
-
-// Prop types definition
-RequestRow.propTypes = {
-  web3Context: PropTypes.any.isRequired,
-  id: PropTypes.number.isRequired,
-  campaign: PropTypes.any.isRequired,
-  request: PropTypes.shape({
-    description: PropTypes.string,
-    value: PropTypes.string,
-    recipient: PropTypes.string,
-    coplete: PropTypes.bool,
-    approvalCount: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  }),
-  approversCount: PropTypes.number.isRequired,
 };
 
 export default RequestRow;

@@ -1,5 +1,4 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Menu, Button, Icon, Message } from "semantic-ui-react";
 import Image from "next/image";
 import styled from "styled-components";
@@ -12,7 +11,13 @@ const TitleStyled = styled.p`
   font-size: 1.5em;
 `;
 
-const Header = ({ signer, networkId }) => {
+export type HeaderPropsType = {
+  signer: string;
+  networkId: string;
+}
+
+const Header = (props: HeaderPropsType) => {
+  const { signer, networkId } = props;
   return (
     <>
       <Menu icon="labeled" secondary style={{ marginTop: "10px" }}>
@@ -68,12 +73,6 @@ const Header = ({ signer, networkId }) => {
       </Message>
     </>
   );
-};
-
-// Prop types definition
-Header.propTypes = {
-  signer: PropTypes.string.isRequired,
-  networkId: PropTypes.string.isRequired,
 };
 
 export default Header;

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Container, Message, Button } from "semantic-ui-react";
 import Image from "next/image";
 import styled from "styled-components";
+
 import Header from "./Header";
 import icon from "../public/metamask.png";
 

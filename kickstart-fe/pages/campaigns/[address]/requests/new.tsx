@@ -1,11 +1,16 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Form, Button, Message, Input } from "semantic-ui-react";
 import getCampaignInfo from "../../../../contracts/campaignUtil";
 import { Link, Router } from "../../../../routes";
 import Layout from "../../../../components/Layout";
 
-const RequestNew = ({ address }) => {
+export type RequestNewPropsType = {
+  address: string;
+}
+
+const RequestNew = (props: RequestNewPropsType) => {
+  const { address } = props;
+
   // States definition
   const [value, setValue] = useState("");
   const [description, setDescription] = useState("");
@@ -77,11 +82,6 @@ const RequestNew = ({ address }) => {
 RequestNew.getInitialProps = async ({ query }) => {
   const address = query.address;
   return { address };
-};
-
-// Props types definition
-RequestNew.propTypes = {
-  address: PropTypes.string.isRequired,
 };
 
 export default RequestNew;

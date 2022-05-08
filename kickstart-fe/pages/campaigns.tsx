@@ -1,46 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { Card, Button } from "semantic-ui-react";
-import { checkIfWalletIsConnected } from "../contracts/web3";
-import Layout, { Web3Context } from "../components/Layout";
-import { Link } from "../routes";
+import Link from 'next/link';
+
+import Layout from "../components/Layout";
 import getFactoryInfo from "../contracts/factoryUtil";
 
-const CampaignIndex = (props) => {
+const CampaignIndex = () => {
   // States definition
   const [campaigns, setCampaigns] = useState([]);
 
   // Retrieve all the campaigns from the factory
-  var retrieveCampaigns = async () => {
-    const [factoryContract, web3Context] = getFactoryInfo();
+  const retrieveCampaigns = async () => {
+    const [factoryContract] = getFactoryInfo();
     const info = await factoryContract?.methods.getDeployedCampaigns().call();
     setCampaigns(info);
   };
 
-  useEffect(async () => {
+  useEffect(() => {
     retrieveCampaigns();
   }, []);
 
   // get campaigns information and display them
-  const renderCampaigns = () => {
-    const items = campaigns?.map((address) => {
+  const getCampaignsItem = useCallback(() => {
+    return campaigns?.map((address) => {
       return {
         header: address,
         description: (
-          <Link route={`/campaigns/${address}`}>
+          <Link href={`/campaigns/${address}`}>
             <a>View Campaign</a>
           </Link>
         ),
         fluid: true,
       };
     });
-    return <Card.Group items={items} />;
-  };
+  }, [campaigns]);
 
   return (
     <Layout>
       <div>
         <h3>Open Campaigns</h3>
-        <Link route="/campaigns/new">
+        <Link href="/campaigns/new">
           <a>
             <Button
               floated="right"
@@ -50,7 +49,7 @@ const CampaignIndex = (props) => {
             />
           </a>
         </Link>
-        {renderCampaigns()}
+        <Card.Group items={getCampaignsItem()} />
       </div>
     </Layout>
   );
