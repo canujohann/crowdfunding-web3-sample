@@ -19,8 +19,6 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-      - name: Adding markdown
-        run: echo ‘## Report for this PR :rocket:’ >> $GITHUB_STEP_SUMMARY
       - uses: actions/checkout@v2
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v2
@@ -31,3 +29,5 @@ jobs:
       - run: npm test
       - run: npm run install-fe
       - run: npm run test-fe
+      - name: Adding markdown
+        run: echo ‘## Report for this PR :rocket:’ >> $GITHUB_STEP_SUMMARY
