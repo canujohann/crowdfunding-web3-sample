@@ -13,6 +13,7 @@ const CampaignNew = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
   // Create a new campaign
   const onSubmit = async (event) => {
@@ -25,13 +26,12 @@ const CampaignNew = () => {
       //update file on IPFS (if file existing)
       if (file) {
         const created = await client.add(file);
-        const url = `https://ipfs.infura.io/ipfs/${created.path}`;
-        console.log(`url to be used is ${url}`);
+        setImageUrl(`https://ipfs.infura.io/ipfs/${created.path}`);
       }
 
       // Update blockchain
       await factoryContract.methods
-        .createCampaign(minimumContribution, file)
+        .createCampaign(minimumContribution, imageUrl)
         .send({
           from: accounts[0],
         });
