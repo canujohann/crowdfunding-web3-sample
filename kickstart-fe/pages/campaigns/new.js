@@ -13,7 +13,6 @@ const CampaignNew = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
   const [file, setFile] = useState(null);
-  const [imageUrl, setImageUrl] = useState("");
 
   // Create a new campaign
   const onSubmit = async (event) => {
@@ -24,16 +23,19 @@ const CampaignNew = () => {
       const accounts = await web3Context.eth.getAccounts();
 
       //update file on IPFS (if file existing)
+      let imageIPFS = "";
       if (file) {
-        const created = await client.add(file);
-        setImageUrl(
-          `${process.env.NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL}/${created.path}`
-        );
+        try {
+          const created = await client.add(file);
+          imageIPFS = `${process.env.NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL}/${created.path}`;
+        } catch (e) {
+          console.log(`error happened in the IPFS image upload proccces: ${e}`);
+        }
       }
 
       // Update blockchain
       await factoryContract.methods
-        .createCampaign(minimumContribution, imageUrl)
+        .createCampaign(minimumContribution, imageIPFS)
         .send({
           from: accounts[0],
         });

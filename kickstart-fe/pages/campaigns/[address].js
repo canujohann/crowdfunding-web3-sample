@@ -1,11 +1,19 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Card, Grid, Button, Message } from "semantic-ui-react";
+import Image from "next/image";
+import styled from "styled-components";
 import Layout from "../../components/Layout";
 import getCampaignInfo from "../../contracts/campaignUtil";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from "../../routes";
 import { showFriendlyAddress } from "../../common/utils";
+
+const ImageStyled = styled.img`
+  width: 100%;
+  border: solid 1px;
+  margin-top: 30px;
+`;
 
 const CampaignShow = ({ address }) => {
   // set state
@@ -25,7 +33,6 @@ const CampaignShow = ({ address }) => {
     const [campaign, web3Context] = getCampaignInfo(address);
     setWeb3(web3Context);
     const summary = await campaign.methods.getSummary().call();
-
     setSummary({
       address: address,
       minimumContribution: summary[0],
@@ -85,12 +92,6 @@ const CampaignShow = ({ address }) => {
         description:
           "The balance is how much money this campaign has left to spend.",
       },
-      {
-        color: "blue",
-        header: image,
-        meta: "Campaign Image",
-        description: "Test for url from IPFS",
-      },
     ];
 
     return <Card.Group color="blue" items={items} />;
@@ -117,6 +118,7 @@ const CampaignShow = ({ address }) => {
                 Already contributed, or you are the manager of the campaign.
               </Message>
             )}
+            <ImageStyled src={summary.image} alt="campaign logo" />
           </Grid.Column>
         </Grid.Row>
       </Grid>

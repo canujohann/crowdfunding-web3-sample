@@ -161,4 +161,44 @@ describe("Campaigns", () => {
     balance = parseFloat(balance);
     assert(balance > 104);
   });
+
+  it("Retrieve campaign details", async () => {
+    const summary = await campaign.methods.getSummary().call();
+    assert.equal(summary[0], 100);
+    assert.equal(summary[1], 0);
+    assert.equal(summary[2], 0);
+    assert.equal(summary[3], 0);
+    assert(summary[4].length > 30);
+    assert.equal(summary[5], true);
+    assert.equal(summary[6], "");
+  });
+
+  it("Retrieve campaign details with url", async () => {
+    // Add a second campaign
+    await factory.methods.createCampaign("100", "my-url").send({
+      from: accounts[0],
+      gas: "4000000",
+    });
+
+    // Retrieve all deployed campaigns
+    const deployedCampaigns = await factory.methods
+      .getDeployedCampaigns()
+      .call();
+    assert.equal(deployedCampaigns.length, 2);
+
+    // Retrieve second campaign
+    const secondCampaign = await new web3.eth.Contract(
+      compiledCampaign.abi,
+      deployedCampaigns[1]
+    );
+
+    const summary = await secondCampaign.methods.getSummary().call();
+    assert.equal(summary[0], 100);
+    assert.equal(summary[1], 0);
+    assert.equal(summary[2], 0);
+    assert.equal(summary[3], 0);
+    assert(summary[4].length > 30);
+    assert.equal(summary[5], true);
+    assert.equal(summary[6], "my-url");
+  });
 });
