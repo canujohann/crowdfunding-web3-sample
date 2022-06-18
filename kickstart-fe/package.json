@@ -16,6 +16,7 @@
     "eslint-plugin-testing-library": "^5.1.0",
     "fs-extra": "^10.0.0",
     "ganache-cli": "^6.12.2",
+    "ipfs-http-client": "^57.0.1",
     "mocha": "^9.1.2",
     "next": "12.1.0",
     "next-routes": "^1.4.2",

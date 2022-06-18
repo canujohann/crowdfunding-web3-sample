@@ -24,6 +24,9 @@ contract Campaign {
     // Minimum amount needed for contributing to the campaign
     uint256 public minimumContribution;
 
+    // Campaign image
+    string public image;
+
     // Mapping (not list) of contributors to this campaign
     mapping(address => bool) public approvers;
 
@@ -38,9 +41,14 @@ contract Campaign {
         _;
     }
 
-    constructor(uint256 minimum, address creator) {
+    constructor(
+        uint256 minimum,
+        address creator,
+        string memory imageIllustration
+    ) {
         manager = creator;
         minimumContribution = minimum;
+        image = imageIllustration;
     }
 
     /**
@@ -123,7 +131,8 @@ contract Campaign {
             uint256,
             uint256,
             address,
-            bool
+            bool,
+            string memory
         )
     {
         return (
@@ -132,7 +141,8 @@ contract Campaign {
             requests.length,
             approversCount,
             manager,
-            (approvers[msg.sender] || msg.sender == manager)
+            (approvers[msg.sender] || msg.sender == manager),
+            image
         );
     }
 
