@@ -66,7 +66,10 @@ const CampaignNew = () => {
           />
         </Form.Field>
 
-        <input type="file" name="data" onChange={retrieveFile} />
+        <Form.Field>
+          <label>Image for the campaign</label>
+          <Input type="file" name="data" onChange={retrieveFile} />
+        </Form.Field>
 
         <Message error header="Oops!" content={errorMessage} />
         <Button loading={loading} primary>
