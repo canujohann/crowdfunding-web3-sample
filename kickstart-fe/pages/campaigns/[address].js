@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Card, Grid, Button, Message } from "semantic-ui-react";
-import Image from "next/image";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
 import getCampaignInfo from "../../contracts/campaignUtil";
