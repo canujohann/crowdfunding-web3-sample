@@ -18,7 +18,7 @@ beforeEach(async () => {
     .deploy({ data: compiledFactory.bytecode })
     .send({ from: accounts[0], gas: "4000000" });
 
-  await factory.methods.createCampaign("100").send({
+  await factory.methods.createCampaign("100", "").send({
     from: accounts[0],
     gas: "4000000",
   });
@@ -31,6 +31,43 @@ describe("Campaigns", () => {
   it("deploys a factory and a campaign", () => {
     assert.ok(factory.options.address);
     assert.ok(campaign.options.address);
+  });
+
+  it("deploys multiple campaign", async () => {
+    // Add a second campaign
+    await factory.methods.createCampaign("100", "my-url").send({
+      from: accounts[0],
+      gas: "4000000",
+    });
+
+    const deployedCampaigns = await factory.methods
+      .getDeployedCampaigns()
+      .call();
+    assert.equal(deployedCampaigns.length, 2);
+  });
+
+  it("deploys multiple campaign and validate image url", async () => {
+    // Add a second campaign
+    await factory.methods.createCampaign("100", "my-url").send({
+      from: accounts[0],
+      gas: "4000000",
+    });
+
+    // retrieve deployed campaigns
+    const deployedCampaigns = await factory.methods
+      .getDeployedCampaigns()
+      .call();
+    assert.equal(deployedCampaigns.length, 2);
+
+    // Retrieve second campaign
+    const secondCampaign = await new web3.eth.Contract(
+      compiledCampaign.abi,
+      deployedCampaigns[1]
+    );
+
+    // And finally get the url
+    const urlSecondCampaign = await secondCampaign.methods.image().call();
+    assert.equal(urlSecondCampaign, "my-url");
   });
 
   it("marks caller as the campaign manager", async () => {
