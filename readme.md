@@ -1,12 +1,13 @@
 # Coin starter
 
-Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity). This project is inspired from this [tutorial](https://shorturl.at/bfhrJ) available on udemy.
+Web3 sample project to intereact between a react application (NextJs) and a smart contract hosted on a ethereum blockchain (solidity).
 
 ## Stack
 
 - React (Nextjs)
 - Semantic-ui
 - Mocha
+- Solidity (0.8.11)
 - Web3 library
 - MetaMask
 - Truffle
@@ -70,6 +71,20 @@ WIP
 
 ## FE side (Nextjs)
 
+### Prepare your browser
+
+You need to install Metamask extension on your browser
+
+**please never use your real wallet for that .... install it on a different browser, just to avoid any risk.**
+
+Add the local blockchain network in MetaMask by entering the RPC URL and Chain ID. Default Value are http://127.0.0.1:8545 and 1337 respectively.
+
+![add ganache network to metamask](/docs/metamask-add-local-ganache.png)
+
+Be sure to select this network is selected :
+
+![confirm ganache network to metamask](/docs/confirm-metamask-local.png)
+
 ### Setup
 
 - Install packages with `npm run install-fe`
@@ -90,6 +105,12 @@ NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL=https://ipfs.infura.io/ipfs
 Run `npm run test-fe` to run unit tests of components.
 
 Because of the complexity of mocking Metamask, no e2e tests (cypress,etc.).
+
+## How to participate
+
+Feel free to create PR to the master branch. Github Actions is used to run the solidity and FE tests. All checks need to be green before asking for a review.
+
+Any comments , bugs tickets are also welcome !
 
 ## Screen captures
 
