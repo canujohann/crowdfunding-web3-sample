@@ -17,6 +17,7 @@ const CampaignShow = ({ address }) => {
     approversCount: 0,
     manager: "",
     alreadyContributed: false,
+    image: null,
   });
   const [web3, setWeb3] = React.useState(null);
 
@@ -33,6 +34,7 @@ const CampaignShow = ({ address }) => {
       approversCount: summary[3],
       manager: summary[4],
       alreadyContributed: summary[5],
+      image: summary[6],
     });
   }, []);
 
@@ -81,6 +83,12 @@ const CampaignShow = ({ address }) => {
         meta: "Campaign Balance (ether)",
         description:
           "The balance is how much money this campaign has left to spend.",
+      },
+      {
+        color: "blue",
+        header: image,
+        meta: "Campaign Image",
+        description: "Test for url from IPFS",
       },
     ];
 

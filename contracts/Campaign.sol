@@ -14,6 +14,7 @@ contract Campaign {
     Request[] public requests;
     address public manager;
     uint256 public minimumContribution;
+    string public image;
     mapping(address => bool) public approvers;
     uint256 public approversCount;
 
@@ -22,9 +23,14 @@ contract Campaign {
         _;
     }
 
-    constructor(uint256 minimum, address creator) {
+    constructor(
+        uint256 minimum,
+        address creator,
+        string memory imageIllustration
+    ) {
         manager = creator;
         minimumContribution = minimum;
+        image = imageIllustration;
     }
 
     /**
@@ -98,7 +104,8 @@ contract Campaign {
             uint256,
             uint256,
             address,
-            bool
+            bool,
+            string memory
         )
     {
         return (
@@ -107,7 +114,8 @@ contract Campaign {
             requests.length,
             approversCount,
             manager,
-            (approvers[msg.sender] || msg.sender == manager)
+            (approvers[msg.sender] || msg.sender == manager),
+            image
         );
     }
 

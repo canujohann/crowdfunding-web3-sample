@@ -30,9 +30,11 @@ const CampaignNew = () => {
       }
 
       // Update blockchain
-      await factoryContract.methods.createCampaign(minimumContribution).send({
-        from: accounts[0],
-      });
+      await factoryContract.methods
+        .createCampaign(minimumContribution, file)
+        .send({
+          from: accounts[0],
+        });
 
       Router.pushRoute("/campaigns");
     } catch (err) {
@@ -46,7 +48,6 @@ const CampaignNew = () => {
     const reader = new window.FileReader();
     reader.readAsArrayBuffer(data);
     reader.onloadend = () => {
-      // console.log("Buffer data: ", Buffer(reader.result));
       setFile(Buffer(reader.result));
     };
     e.preventDefault();
