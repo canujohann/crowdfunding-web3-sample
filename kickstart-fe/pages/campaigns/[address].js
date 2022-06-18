@@ -45,6 +45,7 @@ const CampaignShow = ({ address }) => {
       minimumContribution,
       requestsCount,
       approversCount,
+      image,
     } = summary;
 
     const items = [

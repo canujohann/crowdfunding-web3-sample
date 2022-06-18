@@ -73,16 +73,17 @@ WIP
 ### Setup
 
 - Install packages with `npm run install-fe`
-- Update the `NEXT_PUBLIC_FACTORY_ADDRESS` value in `kickstarter-fe/.env.local` with the Factory contract address (_available in the transactions tab of ganache_)
-- Run `npm run start-fe` to start server on port 3000
-
-Default value for .env.local :
+- Update the `NEXT_PUBLIC_FACTORY_ADDRESS` value in `kickstarter-fe/.env.local` with the Factory contract address (_available in the transactions tab of ganache_) and the other default values as below :
 
 ```
-NEXT_PUBLIC_FACTORY_ADDRESS=0x8151fbb7eee0b4aeC087b59581dc64d2badF699d
+NEXT_PUBLIC_FACTORY_ADDRESS=xxxx
 NEXT_PUBLIC_NODE_ADDRESS=http://127.0.0.1:7545
 NEXT_PUBLIC_NETWORK_ID=5777
+NEXT_PUBLIC_IPFS_CLIENT=https://ipfs.infura.io:5001/api/v0
+NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL=https://ipfs.infura.io/ipfs
 ```
+
+- Run `npm run start-fe` to start server on port 3000
 
 ### How to run tests
 

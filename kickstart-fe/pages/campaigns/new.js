@@ -5,7 +5,7 @@ import Layout from "../../components/Layout";
 import getFactoryInfo from "../../contracts/factoryUtil";
 import { Router } from "../../routes";
 
-const client = create("https://ipfs.infura.io:5001/api/v0");
+const client = create(process.env.NEXT_PUBLIC_IPFS_CLIENT);
 
 const CampaignNew = () => {
   // States definition
@@ -26,7 +26,9 @@ const CampaignNew = () => {
       //update file on IPFS (if file existing)
       if (file) {
         const created = await client.add(file);
-        setImageUrl(`https://ipfs.infura.io/ipfs/${created.path}`);
+        setImageUrl(
+          `${process.env.NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL}/${created.path}`
+        );
       }
 
       // Update blockchain
