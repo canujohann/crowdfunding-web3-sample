@@ -28,6 +28,3 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run install-fe
-      - run: npm run test-fe
-      - name: Adding markdown
-        run: echo ‘## Report for this PR :rocket:’ >> $GITHUB_STEP_SUMMARY
