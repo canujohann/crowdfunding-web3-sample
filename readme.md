@@ -26,7 +26,7 @@ sequenceDiagram
   participant IPFS
 
   Manager->>IPFS: Update image if any on IPFS
-  Manager->>Smart Contract: Create a new camapaign
+  Manager->>Smart Contract: Create a new campaign
   Contributor1->>Smart Contract: Contribute to the campaign
   Contributor2->>Smart Contract: Contribute to the campaign
   loop Every request
