@@ -27,7 +27,6 @@ contract Campaign {
     // Campaign image
     string public image;
 
-
     // Mapping (not list) of contributors to this campaign
     mapping(address => bool) public approvers;
 
