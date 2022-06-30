@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { Container, Message, Button } from "semantic-ui-react";
 import Image from "next/image";
 import styled from "styled-components";
 
 import Header from "./Header";
+import useMetamask from "hooks/useMetamask";
 import MetamaskIcon from "../public/metamask.png";
 
 import "semantic-ui-css/semantic.min.css";
@@ -32,7 +33,7 @@ const NoConnection = ({ connect }: { connect: () => Promise<void> }) => {
         Connect to Metamask
       </Button>
       <DivStyled>
-        <Image src={MetamaskIcon} alt="metamask-icon" width={50} height={50}/>
+        <Image src={MetamaskIcon} alt="metamask-icon" width={50} height={50} />
       </DivStyled>
     </CenterDiv>
   );
@@ -40,56 +41,15 @@ const NoConnection = ({ connect }: { connect: () => Promise<void> }) => {
 
 export type LayoutPropsType = {
   children?: React.ReactNode;
-}
+};
 
 const Layout = (props: LayoutPropsType) => {
   const { children } = props;
-  // States definition
-  const [hasMetamask, setHasMetamask] = useState(false);
-  const [isConnected, setIsConnected] = useState(false);
-  const [address, setAddress] = useState("");
-  const [networkId, setNetworkId] = useState("");
 
-  // Connect dapp to metamask
-  // TODO: Needs refactoring
-  const connect = async () => {
-    if (window.ethereum) {
-      const requestAccountsResult = await window.ethereum.request<string[]>({
-        method: "eth_requestrequestAccountsResult",
-      }) ?? [];
+  const { hasMetamask, isConnected, address, networkId, connect } =
+    useMetamask();
 
-      const account = requestAccountsResult?.length && requestAccountsResult[0] ? requestAccountsResult[0] : '';
-
-      // Check if any change in accounts
-      window.ethereum.on("accountsChanged", (accounts) => {
-        // TODO: should be tested
-        const currentAccount = accounts instanceof Array ? accounts[0] : '';
-        setAddress(currentAccount);
-      });
-
-      // Set the address (first address from metamask)
-      setAddress(account);
-
-      // Set the network id
-      setNetworkId(window.ethereum.networkVersion ?? "");
-    }
-  };
-
-  // TODO: fix this function as the async is not working as expected
-  useEffect(async () => {
-    // Check if metamask is installed
-    setHasMetamask(!!window.ethereum);
-
-    // Check if metamask is connected
-    const accounts: [] = await window.ethereum?.request({ method: "eth_accounts" }) ?? [];
-
-    if (accounts.length > 0) {
-      setIsConnected(true);
-      connect();
-    } else {
-      setIsConnected(false);
-    }
-  }, [address]);
+  console.log(hasMetamask, isConnected, address, networkId, connect);
 
   return (
     <div>
