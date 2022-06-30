@@ -1,19 +1,26 @@
 import { useEffect, useState } from 'react';
 
 const useMetamask = () => {
-
   const [hasMetamask, setHasMetamask] = useState(false);
   const [isConnected, setIsConnected] = useState(false);
   const [address, setAddress] = useState("");
   const [networkId, setNetworkId] = useState("");
 
-  const connect = async () => {
+  const isMetamaskConnected = async (): Promise<boolean> => {
     if (window.ethereum) {
       setHasMetamask(true);
+      const accounts = await window.ethereum.request<string[]>({ method: "eth_accounts" }) || [];
+      return !!accounts.length;
+    }
+    setHasMetamask(false);
+    return false;
+  }
 
+  const connect = async () => {
+    if (window.ethereum) {
       const requestAccountsResult =
         (await window.ethereum.request<string[]>({
-          method: "eth_accounts",
+          method: "eth_requestAccounts",
         })) ?? [];
 
       if (requestAccountsResult.length > 0) {
@@ -44,8 +51,10 @@ const useMetamask = () => {
 
 
   useEffect(() => {
-    connect();
-  })
+    if (!isMetamaskConnected()) {
+      connect();
+    }
+  }, []);
 
   return ({
     hasMetamask,
