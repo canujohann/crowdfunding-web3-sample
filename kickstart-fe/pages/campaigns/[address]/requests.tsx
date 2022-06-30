@@ -1,12 +1,16 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { Button, Table } from "semantic-ui-react";
 import { Link } from "../../../routes";
 import Layout from "../../../components/Layout";
 import getCampaignInfo from "../../../contracts/campaignUtil";
 import RequestRow from "../../../components/RequestRow";
 
-const RequestIndex = ({ address }) => {
+export type RequestIndexPropsType = {
+  address: string;
+}
+
+const RequestIndex = (props: RequestIndexPropsType) => {
+  const { address } = props;
   //states
   const [requests, setRequests] = useState([]);
   const [requestCount, setRequestCount] = useState(0);
@@ -98,11 +102,6 @@ const RequestIndex = ({ address }) => {
 RequestIndex.getInitialProps = async ({ query }) => {
   const address = query.address;
   return { address };
-};
-
-// props types definition
-RequestIndex.propTypes = {
-  address: PropTypes.string.isRequired,
 };
 
 export default RequestIndex;

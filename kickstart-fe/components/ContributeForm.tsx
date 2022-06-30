@@ -1,10 +1,15 @@
 import React, { useState } from "react";
-import PropTypes from "prop-types";
 import { Form, Input, Message, Button } from "semantic-ui-react";
 import getCampaignInfo from "../contracts/campaignUtil";
 import { Router } from "../routes";
 
-const ContributeForm = ({ address }) => {
+export type ContributeFormPropsType = {
+  address: string;
+}
+
+const ContributeForm = (props: ContributeFormPropsType) => {
+  const { address} = props;
+  
   const [value, setValue] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
@@ -50,11 +55,6 @@ const ContributeForm = ({ address }) => {
       </Button>
     </Form>
   );
-};
-
-// Prop types definition
-ContributeForm.propTypes = {
-  address: PropTypes.string.isRequired,
 };
 
 export default ContributeForm;

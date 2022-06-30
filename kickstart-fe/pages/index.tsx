@@ -10,7 +10,7 @@ const LogoWrapperStyled = styled.div`
   text-align: center;
 `;
 
-const Index = (props) => {
+const Index = () => {
   return (
     <Layout>
       <LogoWrapperStyled>
