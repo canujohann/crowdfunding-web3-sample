@@ -22,5 +22,8 @@
     "ganache-cli": "^6.12.2",
     "mocha": "^9.2.1",
     "web3": "^1.7.1"
+  },
+  "devDependencies": {
+    "truffle": "5.5.2"
   }
 }

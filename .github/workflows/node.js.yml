@@ -28,4 +28,3 @@ jobs:
       - run: npm ci
       - run: npm test
       - run: npm run install-fe
-      - run: npm run test-fe

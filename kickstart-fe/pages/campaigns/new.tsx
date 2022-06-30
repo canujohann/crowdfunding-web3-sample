@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { Form, Button, Input, Message } from "semantic-ui-react";
+import { create } from "ipfs-http-client";
 import Layout from "../../components/Layout";
 import getFactoryInfo from "../../contracts/factoryUtil";
 import { Router } from "../../routes";
+
+const client = create(process.env.NEXT_PUBLIC_IPFS_CLIENT);
 
 const CampaignNew = () => {
   // States definition
   const [minimumContribution, setMinimumContribution] = useState(0);
   const [errorMessage, setErrorMessage] = useState("");
   const [loading, setLoading] = useState(false);
+  const [file, setFile] = useState(null);
 
   // Create a new campaign
   const onSubmit = async (event) => {
@@ -17,15 +21,40 @@ const CampaignNew = () => {
     try {
       const [factoryContract, web3Context] = getFactoryInfo();
       const accounts = await web3Context.eth.getAccounts();
-      await factoryContract.methods.createCampaign(minimumContribution).send({
-        from: accounts[0],
-      });
+
+      //update file on IPFS (if file existing)
+      let imageIPFS = "";
+      if (file) {
+        try {
+          const created = await client.add(file);
+          imageIPFS = `${process.env.NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL}/${created.path}`;
+        } catch (e) {
+          console.log(`error happened in the IPFS image upload proccces: ${e}`);
+        }
+      }
+
+      // Update blockchain
+      await factoryContract.methods
+        .createCampaign(minimumContribution, imageIPFS)
+        .send({
+          from: accounts[0],
+        });
 
       Router.pushRoute("/campaigns");
     } catch (err) {
       setErrorMessage(err.message);
     }
     setLoading(false);
+  };
+
+  const retrieveFile = (e) => {
+    const data = e.target.files[0];
+    const reader = new window.FileReader();
+    reader.readAsArrayBuffer(data);
+    reader.onloadend = () => {
+      setFile(Buffer(reader.result));
+    };
+    e.preventDefault();
   };
 
   return (
@@ -41,6 +70,12 @@ const CampaignNew = () => {
             onChange={(event) => setMinimumContribution(event.target.value)}
           />
         </Form.Field>
+
+        <Form.Field>
+          <label>Image for the campaign</label>
+          <Input type="file" name="data" onChange={retrieveFile} />
+        </Form.Field>
+
         <Message error header="Oops!" content={errorMessage} />
         <Button loading={loading} primary>
           Create!

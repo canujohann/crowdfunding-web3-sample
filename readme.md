@@ -24,8 +24,10 @@ sequenceDiagram
   participant Contributor2
   participant ProviderX
   participant Smart Contract
+  participant IPFS
 
-  Manager->>Smart Contract: Create a new camapaign
+  Manager->>IPFS: Update image if any on IPFS
+  Manager->>Smart Contract: Create a new campaign
   Contributor1->>Smart Contract: Contribute to the campaign
   Contributor2->>Smart Contract: Contribute to the campaign
   loop Every request
@@ -52,7 +54,7 @@ sequenceDiagram
 
 > Truffle has a embedded blockchain but ganache has a nice interface, making transactions/users/contracts validation easier. `truffle-config.js` is already set to target Ganache by default, nothing to do on your side.
 
-> If you do some change to your contract and want to redeploy them as new contract, use `npm migrate-reset`
+> If you do some change to your contract and want to redeploy them as new contract, use `npm run migrate-reset`
 
 _Ganache preview:_
 ![Ganache preview](docs/ganache.png)
@@ -69,19 +71,34 @@ WIP
 
 ## FE side (Nextjs)
 
+### Prepare your browser
+
+You need to install Metamask extension on your browser
+
+**please never use your real wallet for that .... install it on a different browser, just to avoid any risk.**
+
+Add the local blockchain network in MetaMask by entering the RPC URL and Chain ID. Default Value are http://127.0.0.1:8545 and 1337 respectively.
+
+![add ganache network to metamask](/docs/metamask-add-local-ganache.png)
+
+Be sure to select this network is selected :
+
+![confirm ganache network to metamask](/docs/confirm-metamask-local.png)
+
 ### Setup
 
 - Install packages with `npm run install-fe`
-- Update the `NEXT_PUBLIC_FACTORY_ADDRESS` value in `kickstarter-fe/.env.local` with the Factory contract address (_available in the transactions tab of ganache_)
-- Run `npm run start-fe` to start server on port 3000
-
-Default value for .env.local :
+- Update the `NEXT_PUBLIC_FACTORY_ADDRESS` value in `kickstarter-fe/.env.local` with the Factory contract address (_available in the transactions tab of ganache_) and the other default values as below :
 
 ```
-NEXT_PUBLIC_FACTORY_ADDRESS=0x8151fbb7eee0b4aeC087b59581dc64d2badF699d
+NEXT_PUBLIC_FACTORY_ADDRESS=xxxx
 NEXT_PUBLIC_NODE_ADDRESS=http://127.0.0.1:7545
 NEXT_PUBLIC_NETWORK_ID=5777
+NEXT_PUBLIC_IPFS_CLIENT=https://ipfs.infura.io:5001/api/v0
+NEXT_PUBLIC_IPFS_IMAGE_ROOT_URL=https://ipfs.infura.io/ipfs
 ```
+
+- Run `npm run start-fe` to start server on port 3000
 
 ### How to run tests
 

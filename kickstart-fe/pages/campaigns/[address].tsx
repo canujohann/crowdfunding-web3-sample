@@ -1,10 +1,17 @@
 import React, { useEffect } from "react";
 import { Card, Grid, Button, Message } from "semantic-ui-react";
+import styled from "styled-components";
 import Layout from "../../components/Layout";
 import getCampaignInfo from "../../contracts/campaignUtil";
 import ContributeForm from "../../components/ContributeForm";
 import { Link } from "../../routes";
 import { showFriendlyAddress } from "../../common/utils";
+
+const ImageStyled = styled.img`
+  width: 100%;
+  border: solid 1px;
+  margin-top: 30px;
+`;
 
 export type CampaignShowPropsType = {
   address: string;
@@ -21,6 +28,7 @@ const CampaignShow = (props: CampaignShowPropsType) => {
     approversCount: 0,
     manager: "",
     alreadyContributed: false,
+    image: null,
   });
   const [web3, setWeb3] = React.useState(null);
 
@@ -28,7 +36,6 @@ const CampaignShow = (props: CampaignShowPropsType) => {
     const [campaign, web3Context] = getCampaignInfo(address);
     setWeb3(web3Context);
     const summary = await campaign.methods.getSummary().call();
-
     setSummary({
       address: address,
       minimumContribution: summary[0],
@@ -37,6 +44,7 @@ const CampaignShow = (props: CampaignShowPropsType) => {
       approversCount: summary[3],
       manager: summary[4],
       alreadyContributed: summary[5],
+      image: summary[6],
     });
   }, []);
 
@@ -47,6 +55,7 @@ const CampaignShow = (props: CampaignShowPropsType) => {
       minimumContribution,
       requestsCount,
       approversCount,
+      image,
     } = summary;
 
     const items = [
@@ -112,6 +121,7 @@ const CampaignShow = (props: CampaignShowPropsType) => {
                 Already contributed, or you are the manager of the campaign.
               </Message>
             )}
+            <ImageStyled src={summary.image} alt="campaign logo" />
           </Grid.Column>
         </Grid.Row>
       </Grid>
