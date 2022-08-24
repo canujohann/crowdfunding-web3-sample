@@ -1,24 +1,31 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Menu, Button, Icon, Message } from "semantic-ui-react";
 import Image from "next/image";
+import Link from "next/link";
 import styled from "styled-components";
-import { Link } from "../routes";
+
 import { showFriendlyAddress, showNetworkName } from "../common/utils";
-import logo from "../public/coin-starter-logos.png";
+import CoinStarterLogo from "../public/coin-starter-logos.png";
 
 const TitleStyled = styled.p`
   color: #45cbb2;
   font-size: 1.5em;
 `;
 
-const Header = ({ signer, networkId }) => {
+export type HeaderPropsType = {
+  signer: string;
+  networkId: string;
+};
+
+const Header = (props: HeaderPropsType) => {
+  const { signer, networkId } = props;
+
   return (
     <>
       <Menu icon="labeled" secondary style={{ marginTop: "10px" }}>
-        <Link route="/">
+        <Link href="/">
           <a className="item">
-            <Image width="50" height="50" src={logo} />
+            <Image width="50" height="50" src={CoinStarterLogo} alt="header-logo"/>
           </a>
         </Link>
         <Menu.Item>
@@ -39,20 +46,20 @@ const Header = ({ signer, networkId }) => {
               </Menu.Item>
             </>
           )}
-          <Link route="/">
+          <Link href="/">
             <a className="item">
               <Icon name="eye" />
               Top
             </a>
           </Link>
-          <Link route="/campaigns">
+          <Link href="/campaigns">
             <a className="item">
               <Icon name="list" />
               Campaigns
             </a>
           </Link>
 
-          <Link route="/campaigns/new">
+          <Link href="/campaigns/new">
             <a className="item">
               <Icon name="add square" />
               New campaign
@@ -62,18 +69,12 @@ const Header = ({ signer, networkId }) => {
       </Menu>
       <Message color="red" size="mini">
         <p>
-          You are not on the real ethereum network, but on "
-          {showNetworkName(networkId)}". Be careful !
+          You are not on the real ethereum network, but on &quot;
+          {showNetworkName(networkId)}&quot;. Be careful !
         </p>
       </Message>
     </>
   );
-};
-
-// Prop types definition
-Header.propTypes = {
-  signer: PropTypes.string.isRequired,
-  networkId: PropTypes.string.isRequired,
 };
 
 export default Header;

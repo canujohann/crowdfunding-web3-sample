@@ -1,5 +1,4 @@
 import React, { useEffect } from "react";
-import PropTypes from "prop-types";
 import { Card, Grid, Button, Message } from "semantic-ui-react";
 import styled from "styled-components";
 import Layout from "../../components/Layout";
@@ -14,7 +13,12 @@ const ImageStyled = styled.img`
   margin-top: 30px;
 `;
 
-const CampaignShow = ({ address }) => {
+export type CampaignShowPropsType = {
+  address: string;
+}
+
+const CampaignShow = (props: CampaignShowPropsType) => {
+  const { address } = props;
   // set state
   const [summary, setSummary] = React.useState({
     address: "",
@@ -129,11 +133,6 @@ const CampaignShow = ({ address }) => {
 CampaignShow.getInitialProps = async ({ query }) => {
   const address = query.address;
   return { address };
-};
-
-// props types definition
-CampaignShow.propTypes = {
-  address: PropTypes.string.isRequired,
 };
 
 export default CampaignShow;
